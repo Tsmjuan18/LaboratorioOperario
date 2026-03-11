@@ -10,14 +10,17 @@ public class ModeloDatos {
 	public ModeloDatos() {
 		mapaOperario=new HashMap<String, Operador>();
 	}
-	public void registrarOperador(Operador ope) {
+	
+	
+	
+	public String registrarOperador(Operador ope) {
 		if(!mapaOperario.containsKey(ope.getDocumento())) {
 			
 			mapaOperario.put(ope.getDocumento(), ope);
-			System.out.println("Registro exitoso");
+			return "Registro exitoso";
 			
 		}else {
-			System.out.println("Operador Existente");
+			return "Operador Existente";
 			
 		}
 		
@@ -26,19 +29,20 @@ public class ModeloDatos {
 		
 	}
 	
-	public void consultarOperadorPorDocumento(String documento) {
-		if(mapaOperario.containsKey(documento)) {
-			System.out.println(mapaOperario.get(documento));			
-		}else {
-			System.out.println("El operador no existe");
-		}
-		
-		
-		
+	public Operador consultarOperadorPorDocumento(String documento) {
+
+	    Operador operaTemporal = null;
+
+	    if (mapaOperario.containsKey(documento)) {
+	        operaTemporal = mapaOperario.get(documento);
+	    }
+
+	    return operaTemporal;
 	}
 	
 	public void consultarOperadorLista() {
-		
+		System.out.println("Lista operadores: ");
+		System.out.println(mapaOperario);
 	}
 	public void actualizarOperador() {
 		

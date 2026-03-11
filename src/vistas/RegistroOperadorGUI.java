@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -16,6 +17,7 @@ import javax.swing.border.EmptyBorder;
 
 import Logica.Operador;
 import Logica.Procesos;
+import data.ModeloDatos;
 
 public class RegistroOperadorGUI extends JFrame  implements ActionListener{
 		
@@ -30,14 +32,17 @@ public class RegistroOperadorGUI extends JFrame  implements ActionListener{
 		private JButton btnRegistrar;
 		private JButton btnCancelar;
 		private JButton btnConsultar;
+		private JButton btnConsultarLista;
 		
 		Procesos miProcesos;	
+		ModeloDatos miModeloOperador;
 		
 		
 	
 
 		public RegistroOperadorGUI() {
 			miProcesos = new Procesos();
+			miModeloOperador = new ModeloDatos();
 		    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		    setBounds(100, 100, 704, 327);
 		    
@@ -123,10 +128,15 @@ public class RegistroOperadorGUI extends JFrame  implements ActionListener{
 		    lblPorAumentoFin.setBounds(358, 184, 102, 16);
 		    contentPane.add(lblPorAumentoFin);
 		    
-		    btnConsultar= new JButton("...");
-		    btnConsultar.setBounds(650,92,48,29);
+		    btnConsultar= new JButton("Consulta");
+		    btnConsultar.setBounds(250, 237, 117, 29);
 		    btnConsultar.addActionListener(this);
 		    contentPane.add(btnConsultar);;
+		    
+		    btnConsultarLista = new JButton("Consultar Lista");
+		    btnConsultarLista.setBounds(100, 237, 111, 29);
+		    btnConsultarLista.addActionListener(this);
+		    contentPane.add(btnConsultarLista);
 		}
 
 		@Override
@@ -135,7 +145,9 @@ public class RegistroOperadorGUI extends JFrame  implements ActionListener{
 				registrarOperador();
 				
 			}else if(e.getSource()== btnConsultar) {
-				consultar();				
+				consultarIndividual();				
+			}else if(e.getSource()== btnConsultarLista) {
+				miModeloOperador.consultarOperadorLista();			
 			}
 			else if(e.getSource()== btnCancelar) {
 				limpiar();				
@@ -144,9 +156,21 @@ public class RegistroOperadorGUI extends JFrame  implements ActionListener{
 		}
 
 
-		private void consultar() {
-			
-		}
+		
+			private void consultarIndividual() {
+
+			    String documento = txtDocumento.getText();
+			    Operador miOpera = miModeloOperador.consultarOperadorPorDocumento(documento);
+
+			    if (miOpera != null) {
+			        System.out.println("Objeto encontrado: " + miOpera);
+			    } else {
+			        System.out.println("No existe la persona a buscar");
+			        JOptionPane.showMessageDialog(null, "No existe!");
+			    }
+
+			}
+		
 
 		private void registrarOperador() {
 			Operador miOperador = new Operador();
@@ -158,6 +182,14 @@ public class RegistroOperadorGUI extends JFrame  implements ActionListener{
 			miProcesos.calcularSueldoNuevo(miOperador);			
 			lblResSueldoN.setText(miOperador.getSueldoNuevo()+"");
 			lblPorAumentoFin.setText(miOperador.getAumento()+"");
+			
+			String res=miModeloOperador.registrarOperador(miOperador);
+			
+			if(res.equals("Registro exitoso")) {
+				JOptionPane.showMessageDialog(null, "Registro exitoso");
+			}else {
+				JOptionPane.showMessageDialog(null, "Operador Existente");
+			}
 		}
 		
 		private void limpiar() {
