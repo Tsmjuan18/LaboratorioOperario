@@ -164,6 +164,13 @@ public class RegistroOperadorGUI extends JFrame  implements ActionListener{
 
 			    if (miOpera != null) {
 			        System.out.println("Objeto encontrado: " + miOpera);
+			        txtDocumento.setText(miOpera.getDocumento());
+			        txtNombre.setText(miOpera.getNombre());
+			        txtAntiguedad.setText(miOpera.getAntiguedad()+"");
+			        txtSueldo.setText(miOpera.getSueldo()+"");
+			        lblPorAumentoFin.setText(miOpera.getAumento()+"");
+			        lblResSueldoN.setText(miOpera.getSueldoNuevo()+"");
+			        
 			    } else {
 			        System.out.println("No existe la persona a buscar");
 			        JOptionPane.showMessageDialog(null, "No existe!");
@@ -182,6 +189,8 @@ public class RegistroOperadorGUI extends JFrame  implements ActionListener{
 			miProcesos.calcularSueldoNuevo(miOperador);			
 			lblResSueldoN.setText(miOperador.getSueldoNuevo()+"");
 			lblPorAumentoFin.setText(miOperador.getAumento()+"");
+			
+			
 			
 			String res=miModeloOperador.registrarOperador(miOperador);
 			

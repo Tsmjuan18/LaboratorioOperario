@@ -26,7 +26,6 @@ public class ModeloDatos {
 		
 		
 		
-		
 	}
 	
 	public Operador consultarOperadorPorDocumento(String documento) {
@@ -44,9 +43,7 @@ public class ModeloDatos {
 		System.out.println("Lista operadores: ");
 		System.out.println(mapaOperario);
 	}
-	public void actualizarOperador() {
-		
-	}
+	
 
 
 
