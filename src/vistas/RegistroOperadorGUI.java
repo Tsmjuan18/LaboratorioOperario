@@ -28,12 +28,16 @@ public class RegistroOperadorGUI extends JFrame  implements ActionListener{
 		private JLabel lblResSueldoN;
 		private JLabel lblPorAumentoFin;
 		private JButton btnRegistrar;
-		private JButton btnCancelar;		
+		private JButton btnCancelar;
+		private JButton btnConsultar;
+		
+		Procesos miProcesos;	
 		
 		
 	
 
 		public RegistroOperadorGUI() {
+			miProcesos = new Procesos();
 		    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		    setBounds(100, 100, 704, 327);
 		    
@@ -47,6 +51,7 @@ public class RegistroOperadorGUI extends JFrame  implements ActionListener{
 		}
 
 		private void iniciarComponentes() {
+			
 
 		    JLabel lblTitulo = new JLabel("REGISTRO DE OPERADORES");
 		    lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
@@ -117,6 +122,11 @@ public class RegistroOperadorGUI extends JFrame  implements ActionListener{
 		    lblPorAumentoFin.setForeground(Color.BLUE);
 		    lblPorAumentoFin.setBounds(358, 184, 102, 16);
 		    contentPane.add(lblPorAumentoFin);
+		    
+		    btnConsultar= new JButton("...");
+		    btnConsultar.setBounds(650,92,48,29);
+		    btnConsultar.addActionListener(this);
+		    contentPane.add(btnConsultar);;
 		}
 
 		@Override
@@ -124,15 +134,19 @@ public class RegistroOperadorGUI extends JFrame  implements ActionListener{
 			if(e.getSource()== btnRegistrar) {
 				registrarOperador();
 				
+			}else if(e.getSource()== btnConsultar) {
+				consultar();				
 			}
 			else if(e.getSource()== btnCancelar) {
-				limpiar();
-				
-				
+				limpiar();				
 			}
 			
 		}
 
+
+		private void consultar() {
+			
+		}
 
 		private void registrarOperador() {
 			Operador miOperador = new Operador();
@@ -140,8 +154,7 @@ public class RegistroOperadorGUI extends JFrame  implements ActionListener{
 			miOperador.setDocumento(txtDocumento.getText());
 			miOperador.setNombre(txtNombre.getText());
 			miOperador.setSueldo(Double.parseDouble(txtSueldo.getText()));
-			miOperador.setAntiguedad(Integer.parseInt(txtAntiguedad.getText()));
-			Procesos miProcesos = new Procesos();			
+			miOperador.setAntiguedad(Integer.parseInt(txtAntiguedad.getText()));					
 			miProcesos.calcularSueldoNuevo(miOperador);			
 			lblResSueldoN.setText(miOperador.getSueldoNuevo()+"");
 			lblPorAumentoFin.setText(miOperador.getAumento()+"");
